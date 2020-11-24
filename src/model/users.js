@@ -1,71 +1,71 @@
-const mongoose=require('mongoose');
-const bcrypt=require('bcrypt');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
 
-const UserSchema=new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
 
-         firstName:{
-             type:String,
-             required:true,
-             trim:true,
-             min:3,
-             max:20
-         },
-         lastName:{
-            type:String,
-            required:true,
-            trim:true,
-            min:3,
-            max:20
-        },
-        userName:{
-            type:String,
-            required:true,
-            trim:true,
-            unique:true,
-            index:true,
-            lowercase:true
-           
-        },
-        email:{
-            type:String,
-            require:true,
-            trim:true,
-            unique:true,
-            lowercase:true
-        },
-        hash_password:{
-            type:String,
-            require:true
-        },
-        role:{
-            type:String,
-            enum:['user','admin'],
-            default:'user'
-        },
-        contacNumber:{
-            type:String
-        },
-        profilePicture:{
-            type:String
-        }
-},{timestamps:true});
+    firstName: {
+        type: String,
+        required: true,
+        trim: true,
+        min: 3,
+        max: 20
+    },
+    lastName: {
+        type: String,
+        required: true,
+        trim: true,
+        min: 3,
+        max: 20
+    },
+    userName: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true,
+        index: true,
+        lowercase: true
+
+    },
+    email: {
+        type: String,
+        require: true,
+        trim: true,
+        unique: true,
+        lowercase: true
+    },
+    hash_password: {
+        type: String,
+        require: true
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
+    },
+    contacNumber: {
+        type: String
+    },
+    profilePicture: {
+        type: String
+    }
+}, { timestamps: true });
 
 UserSchema.virtual('password')
-.set(function(password){
-    this.hash_password=bcrypt.hashSync(password,10);
-});
+    .set(function (password) {
+        this.hash_password = bcrypt.hashSync(password, 10);
+    });
 UserSchema.virtual('fullName')
-.get(function(){
-   return `${this.firstName} ${this.lastName}`;
-});
+    .get(function () {
+        return `${this.firstName} ${this.lastName}`;
+    });
 
-UserSchema.methods={
-       authenticate:function(password){
-           return bcrypt.compareSync(password,this.hash_password);
-       }
+UserSchema.methods = {
+    authenticate: function (password) {
+        return bcrypt.compareSync(password, this.hash_password);
+    }
 };
 
 
 
 
-module.exports=mongoose.model('User',UserSchema);
+module.exports = mongoose.model('User', UserSchema);
