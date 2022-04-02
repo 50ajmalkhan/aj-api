@@ -20,7 +20,7 @@ mongoose.connect(
 app.use(cors())
 app.use(bodyParser.json());
 app.use('/public', express.static(path.join(__dirname, 'uploads')));
-app.use('/apiR', (req, res, next) => { { res.send("ajmal"); next(); } });
+app.use('/apiTest', (req, res, next) => { { res.send("ajmal"); next(); } });
 app.use('/api', userRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', CategoryRoutes);
