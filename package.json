@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/50ajmalkhan/MultiVendor-Restful-Api#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
@@ -33,6 +34,5 @@
     "shortid": "^2.2.15",
     "slugify": "^1.4.5"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
