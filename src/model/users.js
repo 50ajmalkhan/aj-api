@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
 
+    bookedService: { type: mongoose.Schema.Types.ObjectId, ref: "BookedService", },
     firstName: {
         type: String,
         required: true,
@@ -17,15 +17,11 @@ const UserSchema = new mongoose.Schema({
         min: 3,
         max: 20
     },
-    userName: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: true,
-        index: true,
-        lowercase: true
-
+    phone: {
+        type: Number,
+        required: true
     },
+
     email: {
         type: String,
         require: true,
@@ -33,37 +29,26 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         lowercase: true
     },
-    hash_password: {
+    password: {
         type: String,
         require: true
     },
     role: {
         type: String,
-        enum: ['user', 'admin'],
+        enum: ['user', 'admin', 'vendor'],
         default: 'user'
     },
-    contacNumber: {
-        type: String
+    fullName: {
+        type: String,
+        required: true
     },
     profilePicture: {
         type: String
     }
 }, { timestamps: true });
 
-UserSchema.virtual('password')
-    .set(function (password) {
-        this.hash_password = bcrypt.hashSync(password, 10);
-    });
-UserSchema.virtual('fullName')
-    .get(function () {
-        return `${this.firstName} ${this.lastName}`;
-    });
 
-UserSchema.methods = {
-    authenticate: function (password) {
-        return bcrypt.compareSync(password, this.hash_password);
-    }
-};
+
 
 
 
